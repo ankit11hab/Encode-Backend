@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework import serializers
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import MembersSerializer
-from .models import Members
+from rest_framework.permissions import IsAuthenticated
+from .serializers import MembersSerializer, NotesSerializer
+from .models import Members, Notes
 
 @api_view(['GET'])
 def home(request):
@@ -24,4 +25,14 @@ def memberCreate(request):
     serializer = MembersSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getNotes(request):
+    user = request.user
+    notes = user.notes_set.all()
+    serializer = NotesSerializer(notes,many=True)
     return Response(serializer.data)
