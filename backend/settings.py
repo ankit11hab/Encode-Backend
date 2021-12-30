@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'authentication',
+    'payment_gateway',
     'rest_framework_simplejwt',
     'rest_framework',
     'corsheaders',
@@ -52,7 +53,7 @@ REST_FRAMEWORK = {
     )
 }
 
-
+ALLOWED_HOSTS = ['198.211.99.20', 'localhost', '127.0.0.1','376a-146-196-45-54.ngrok.io']
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),

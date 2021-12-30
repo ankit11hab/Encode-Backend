@@ -26,8 +26,9 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['GET'])
 def routes(request):
     api_urls = {
-        'List': '/token',
-        'Create': '/token/refresh'
+        'Register': '/register',
+        'Get Tokens': '/token',
+        'Refresh Tokens': '/token/refresh'
     }
     return Response(api_urls)
 
