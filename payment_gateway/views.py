@@ -6,6 +6,8 @@ import razorpay
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
+from drivers.models import Driver
+
 from .models import TestPayment
 from .serializers import TestPaymentHistorySerializer, TestPaymentSerializer
 
@@ -25,10 +27,17 @@ def test_payment(request):
     serializer = TestPaymentSerializer(data=request.data)
     if serializer.is_valid():
         user = request.user
+        busNumber = request.data['busNumber']
         amount = int(request.data['amount'])*100
         client = razorpay.Client(auth = ("rzp_test_11LV9V2xBmW3uJ","qYUSI3HmHEqPjxkXPggT7xlQ"))
         payment = client.order.create({'amount':amount,'currency':'INR','payment_capture':'1'})
-        test = TestPayment(user=user,amount=amount,payment_id=payment['id'])
+        if Driver.objects.filter(busNumber=busNumber).first():
+            bus = Driver.objects.filter(busNumber=busNumber).first()
+            bus.totalRevenue = bus.totalRevenue+amount
+            bus.save()
+        else:
+            return Response("No such bus exists")
+        test = TestPayment(passenger=user,bus=bus,amount=amount,payment_id=payment['id'])
         test.save()
     return Response({'amount':amount,'order_id':payment['id']})
 

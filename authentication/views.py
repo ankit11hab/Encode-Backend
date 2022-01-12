@@ -20,12 +20,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         profile = Profile.objects.filter(user=user).first()
+        
         # Add custom claims
         token['username'] = user.username
         token['email'] = user.email
-        token['first_name'] = profile.first_name
-        token['last_name'] = profile.last_name
-        token['phone'] = profile.phone
+        token['first_name'] = user.first_name
+        token['last_name'] = user.last_name
         token['isDriver'] = profile.isDriver
         return token
 
@@ -57,12 +57,8 @@ class RegisterView(GenericAPIView):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def profile(request):
-    print(request.data['first_name'])
+def driver_status(request):
     profile = Profile.objects.filter(user=request.user).first()
-    profile.first_name = request.data['first_name']
-    profile.last_name = request.data['last_name']
-    profile.phone = request.data['phone']
     profile.isDriver = request.data['is_driver']
     profile.save()
-    return Response(status=status.HTTP_200_OK)
+    return Response("Driver status has been modified successfully!",status=status.HTTP_200_OK)

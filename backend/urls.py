@@ -18,7 +18,11 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('routes.urls')),
     path('api/', include('api.urls')),
     path('auth/', include('authentication.urls')),
     path('payment/', include('payment_gateway.urls')),
+    path('geo/', include('geo.urls')),
+    path('passenger/', include('passengers.urls')),
+    path('driver/', include('drivers.urls')),
 ]

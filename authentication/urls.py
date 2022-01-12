@@ -11,5 +11,5 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/',RegisterView.as_view(),name='register'),
-    path('profile/',views.profile,name='profile'),
+    path('driver_status/',views.driver_status,name='driver-status'),
 ]
