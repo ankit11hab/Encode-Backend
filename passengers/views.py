@@ -11,18 +11,17 @@ def passenger_routes(request):
     return Response("ok")
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def passenger_history(request):
     user = request.user
     history = TestPayment.objects.filter(passenger=user,paid=True)
     toBeReturned = []
     for item in history:
-        obj = {
-            "amount":item.amount,
-            "paymentID": item.payment_id,
-            "busNumber": item.bus.busNumber
-        }
+        obj = {"amount":item.amount,"paymentID": item.payment_id,"busNumber": item.bus.busNumber}
         toBeReturned.append(obj)
-    
-    return Response(json.dumps(toBeReturned))
+    print(toBeReturned)
+    resp = {
+        "data":toBeReturned
+    }
+    return Response(resp)

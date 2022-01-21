@@ -7,4 +7,5 @@ urlpatterns = [
     path('get_places/', views.get_places, name='get-places'),
     path('decode_latlang/', views.decode_latlang, name='decode-latlang'),
     path('autocomplete/', views.autocomplete, name='autocomplete'),
+    path('place_details_from_id/', views.place_details_from_id, name='place_details_from_id'),
 ]

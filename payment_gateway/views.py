@@ -5,7 +5,7 @@ from rest_framework.response import Response
 import razorpay
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-
+import datetime
 from drivers.models import Driver
 
 from .models import TestPayment
@@ -47,6 +47,7 @@ def success(request):
         order_id = request.data['payload']['payment']['entity']['order_id']
         test = TestPayment.objects.filter(payment_id=order_id).first()
         test.paid = True
+        test.date = datetime.datetime.now()
         test.save()
     return Response(status=status.HTTP_200_OK)
 
@@ -55,7 +56,7 @@ def success(request):
 @permission_classes([IsAuthenticated])
 def payment_history(request):
     user = request.user
-    payments=user.testpayment_set.all()
+    payments=user.testpayment_set.filter(paid=True)
     print(payments)
     serializer = TestPaymentHistorySerializer(payments,many=True)
     return Response(serializer.data)

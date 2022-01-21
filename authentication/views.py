@@ -62,3 +62,22 @@ def driver_status(request):
     profile.isDriver = request.data['is_driver']
     profile.save()
     return Response("Driver status has been modified successfully!",status=status.HTTP_200_OK)
+
+@api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
+def get_profile(request):
+    profile = request.user
+    response_var = {
+        'username':profile.username,
+        'first_name':profile.first_name,
+        'last_name':profile.last_name,
+        'email': profile.email
+    }
+    return Response(response_var,status=status.HTTP_200_OK)
+
+@api_view(['GET','POST'])
+def check_username_exists(request):
+    print(request.data)
+    if User.objects.filter(username=request.data['username']).first():
+        return Response(True)
+    return Response(False)

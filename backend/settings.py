@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-*1ir70%34j3vvm*#6a)q%-%h83+rtk-t!3yt--txfql_*or)2+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -57,7 +57,6 @@ REST_FRAMEWORK = {
     )
 }
 
-ALLOWED_HOSTS = ['198.211.99.20', 'localhost', '127.0.0.1','376a-146-196-45-54.ngrok.io','86ca-146-196-45-54.ngrok.io']
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
