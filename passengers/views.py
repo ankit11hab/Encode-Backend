@@ -18,7 +18,7 @@ def passenger_history(request):
     history = TestPayment.objects.filter(passenger=user,paid=True)
     toBeReturned = []
     for item in history:
-        obj = {"amount":item.amount,"paymentID": item.payment_id,"busNumber": item.bus.busNumber}
+        obj = {"amount":item.amount,"paymentID": item.payment_id,"date": item.date,"busNumber": item.bus.busNumber}
         toBeReturned.append(obj)
     print(toBeReturned)
     resp = {
