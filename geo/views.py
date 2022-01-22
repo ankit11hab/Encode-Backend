@@ -15,7 +15,7 @@ def geo_routes(request):
     return Response(api_urls)
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def test(request):
     data_type = "json"
     endpoint = f"https://maps.googleapis.com/maps/api/geocode/{data_type}"
@@ -30,7 +30,7 @@ def test(request):
     return Response(res.json())
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def get_places(request):
     query = request.data["query"]
     print(query)
@@ -62,7 +62,7 @@ def decode_latlang(request):
     return Response(res.json())
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def autocomplete(request):
     lat = request.data["lat"]
     lng = request.data["lng"]
@@ -79,7 +79,7 @@ def autocomplete(request):
     return Response(res.json())
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def place_details_from_id(request):
     place_id = request.data["place_id"]
     data_type = "json"
